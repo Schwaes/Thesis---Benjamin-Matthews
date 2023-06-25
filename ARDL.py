@@ -18,7 +18,7 @@ dates = np.load('dates.npy', allow_pickle=True).tolist()
 dates.reverse()
 
 csimilarities = similarities.to_numpy()
-k_items = 4
+k_items = 6
 
 
 #Takes item name and predicts using ARDL
@@ -36,10 +36,10 @@ def ARDL_predict(item):
     similar_items = [tags[i] for i in top5ind]
 
     #Remove target item, as it always has highest similarity metric
-    for val, item in zip(top5, similar_items):
-        if item == item:
+    for val, a in zip(top5, similar_items):
+        if a == item:
             top5.remove(val)
-            similar_items.remove(item)
+            similar_items.remove(a)
 
     #training data
     x = dates
@@ -89,4 +89,4 @@ def predict_all():
     with open('ARDL_RESULTS.txt', 'w') as fp:
         fp.write(f'total squared error: {total_squared_error} \nmean squared error: {MSE}')
 
-#predict_all()
+predict_all()
